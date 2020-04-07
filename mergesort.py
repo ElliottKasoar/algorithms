@@ -9,6 +9,7 @@ Created on Tue Apr  7 17:55:44 2020
 import numpy as np
 
 ol = np.linspace(0,9,10)
+np.random.shuffle(ol)
 
 # Assume even number of elements in list for now...
 # Count length, not sure if will need but useful to know in general...
@@ -20,3 +21,4 @@ for i in range(length//2):
 
 print("test")
 print("test 2")
+
