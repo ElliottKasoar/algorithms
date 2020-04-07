@@ -17,3 +17,5 @@ length = len(ol) #Could use np.size or np.shape[0]
 
 for i in range(length//2):
     print(i)
+
+print("test")
