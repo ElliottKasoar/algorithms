@@ -19,3 +19,5 @@ for i in range(length//2):
     print(i)
 
 print("test")
+print("test 2")
+print("test 3")
