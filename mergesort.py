@@ -83,3 +83,28 @@ print("Fours ordered(?): ", ul)
 for i in range(length//8):
     x = 8*i
     
+    
+# Function to merge two ordered arrays, a and b, into new ordered array, c.
+# Initial arrays often same length but will not always be unless...
+# ...final array is power of 2. Inputs a and b, returns c.
+def mergefunc(a, b):
+    length_a = len(a)
+    length_b = len(b)
+    length_c = length_a + length_b
+    
+    c = np.zeros(length_c)
+    
+    return c
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
