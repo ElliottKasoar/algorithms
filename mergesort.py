@@ -9,6 +9,7 @@ Created on Tue Apr  7 17:55:44 2020
 import numpy as np
 import math
 
+#Currently works for powers of two only
 
 # =============================================================================
 # Merge arrays
@@ -51,7 +52,7 @@ def merge_func(a, b):
 # =============================================================================
 
 
-ol = np.linspace(0,9,10) #Ordered list to compare with at end.
+ol = np.linspace(0,15,16) #Ordered list to compare with at end.
 ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
 np.random.shuffle(ul) #Shuffle to create unodered list
 print("ol: ", ol)
@@ -61,71 +62,8 @@ print("ul: ", ul)
 # Will be ordered lowest to highest
 length = len(ol) #Could use np.size or np.shape[0]
 
-# # =============================================================================
-# # First set of pairs:
-# # =============================================================================
-
-# for i in range(length//2):
-    
-#     x = 2*i
-#     temp = ul[x+1]
-    
-#     if (ul[x] > ul[x+1]):
-#         ul[x+1] = ul[x]
-#         ul[x] = temp
-
-# print("Pairs ordered: ", ul)
-
-# # =============================================================================
-# # Second set of pairs:
-# # =============================================================================
- 
-# for i in range(length//4):
-
-#     x = 4*i
-#     temp1 = ul[x+2]
-#     temp2 = ul[x+3]
-
-#     if (ul[x+1] > ul[x+2]):
-#         if (ul[x+1] > ul[x+3]):
-            
-#             if (ul[x] > ul[x+2]):
-#                 if (ul[x] > ul[x+3]):
-#                     ul[x+3] = ul[x+1]
-#                     ul[x+2] = ul[x]
-#                     ul[x+1] = temp2
-#                     ul[x] = temp1
-#                 else:
-#                     ul[x+3] = ul[x+1]
-#                     ul[x+2] = temp2
-#                     ul[x+1] = ul[x]
-#                     ul[x] = temp1
-#             else:
-#                 ul[x+3] = ul[x+1]
-#                 ul[x+2] = temp2
-#                 ul[x+1] = temp1
-#         else:
-#             if (ul[x] > ul[x+2]):
-#                 ul[x+2] = ul[x+1]
-#                 ul[x+1] = ul[x]
-#                 ul[x] = temp1
-#             else:
-#                 ul[x+2] = ul[x+1]
-#                 ul[x+1] = temp1
-
-# print("Fours ordered(?): ", ul)
-  
-# # =============================================================================
-# # Third set of pairs        
-# # =============================================================================
-
-# for i in range(length//8):
-#     x = 8*i
-
-
-
 # =============================================================================
-# Something
+# Main
 # =============================================================================
 
 #Say you have 20, then will have 
@@ -143,22 +81,24 @@ else:
 
 for i in range(merge_num):
     
-    # init_arr_size = pow(2, i)
-    # pair_arr_size = 2 * init_arr_size
-    # arr_pairs = length // pair_arr_size
-    # if (np.mod(length, arr_pairs) != 0):
-    #     arr_num = arr_pairs +1
-    # else:
-    #     arr_num = arr_pairs
-
-    # print(arr_num)
-
-    # for i in range(arr_num):
-    #     4
+    init_arr_size = pow(2, i)
+    pair_arr_size = 2 * init_arr_size
     
-    for i in range(10):
-        ul[2*i:2*i+1] = merge_func(ul[2*i], ul[2*i+1])
+    arr_num = length // pair_arr_size
+    
+    # print("Pair size: ", pair_arr_size)
+    
+    for j in range(arr_num):
+        
+        x = j * pair_arr_size
+        # print("x: ", x)
+        ul[x:x + pair_arr_size] = merge_func(ul[x:x + init_arr_size], ul[x + init_arr_size:x + 2 * init_arr_size])
+    
+    # print(ul)
 
+print("Unordered list: ", ul)
+if (np.min(np.subtract(ul, ol)) == 0):
+    print("Sorted!")
 
 
 
