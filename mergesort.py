@@ -94,6 +94,30 @@ def mergefunc(a, b):
     
     c = np.zeros(length_c)
     
+    index_a = 0
+    index_b = 0
+    
+    for i in range(length_c):
+        
+        if (index_a == length_a):
+            c[i:] = b[index_b:]
+            break
+        
+        if (index_b == length_b):
+            c[i:] = a[index_a:]
+            break
+        
+        if (a[index_a] < b[index_b]):
+            c[i] = a[index_a]
+            index_a += 1
+        else:
+            c[i] = b[index_b]
+            index_b += 1
+            
+        print(c)
+        print(index_a)
+        print(index_b)
+        
     return c
     
     
