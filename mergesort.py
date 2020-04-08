@@ -83,7 +83,10 @@ print("Fours ordered(?): ", ul)
 for i in range(length//8):
     x = 8*i
     
-    
+# =============================================================================
+# Merge arrays
+# =============================================================================
+
 # Function to merge two ordered arrays, a and b, into new ordered array, c.
 # Initial arrays often same length but will not always be unless...
 # ...final array is power of 2. Inputs a and b, returns c.
@@ -113,22 +116,8 @@ def mergefunc(a, b):
         else:
             c[i] = b[index_b]
             index_b += 1
-            
-        print(c)
-        print(index_a)
-        print(index_b)
-        
+
     return c
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
