@@ -18,7 +18,7 @@ import math
 # Function to merge two ordered arrays, a and b, into new ordered array, c.
 # Initial arrays often same length but will not always be unless...
 # ...final array is power of 2. Inputs a and b, returns c.
-def merge_func(a, b):
+def mergeFunc(a, b):
     length_a = len(a)
     length_b = len(b)
     length_c = length_a + length_b
@@ -92,7 +92,7 @@ for i in range(merge_num):
         
         x = j * pair_arr_size
         # print("x: ", x)
-        ul[x:x + pair_arr_size] = merge_func(ul[x:x + init_arr_size], ul[x + init_arr_size:x + 2 * init_arr_size])
+        ul[x:x + pair_arr_size] = mergeFunc(ul[x:x + init_arr_size], ul[x + init_arr_size:x + 2 * init_arr_size])
     
     # print(ul)
 
