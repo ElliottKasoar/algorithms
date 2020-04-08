@@ -19,9 +19,6 @@ print("ul: ", ul)
 #Should be half length number of pairs
 length = len(ol) #Could use np.size or np.shape[0]
 
-for i in range(length//2):
-    # print(i)
-    i
 
 # Will be ordered lowest to highest
 
@@ -29,73 +26,60 @@ for i in range(length//2):
 # First set of pairs:
 # =============================================================================
 
-if (ul[0] > ul[1]):
-    temp = ul[1]
-    ul[1] = ul[0]
-    ul[0] = temp
+for i in range(length//2):
     
-if (ul[2] > ul[3]):
-    temp = ul[3]
-    ul[3] = ul[2]
-    ul[2] = temp
+    x = 2*i
+    temp = ul[x+1]
     
-if (ul[4] > ul[5]):
-    temp = ul[5]
-    ul[5] = ul[4]
-    ul[4] = temp
-    
-if (ul[6] > ul[7]):
-    temp = ul[7]
-    ul[7] = ul[6]
-    ul[6] = temp
-    
-if (ul[8] > ul[9]):
-    temp = ul[9]
-    ul[9] = ul[8]
-    ul[8] = temp
+    if (ul[x] > ul[x+1]):
+        ul[x+1] = ul[x]
+        ul[x] = temp
 
-print(ul)
-
-# if (ul[0] < ul[1]):
-#     pair_1 = np.array([ul[0], ul[1]])
-# else:
-#     pair_1 = np.array([ul[1], ul[0]])
-
-# if (ul[2] < ul[3]):
-#     pair_2 = np.array([ul[2], ul[3]])
-# else:
-#     pair_2 = np.array([ul[3], ul[2]])
-    
-# if (ul[4] < ul[5]):
-#     pair_3 = np.array([ul[4], ul[5]])
-# else:
-#     pair_3 = np.array([ul[5], ul[4]])
-    
-# if (ul[6] < ul[7]):
-#     pair_4 = np.array([ul[6], ul[7]])
-# else:
-#     pair_4 = np.array([ul[7], ul[6]])
-
-# if (ul[8] < ul[9]):
-#     pair_5 = np.array([ul[8], ul[9]])
-# else:
-#     pair_5 = np.array([ul[9], ul[8]])
-
-# print(pair_1)
-# print(pair_2)
-# print(pair_3)
-# print(pair_4)
-# print(pair_5)
-
+print("Pairs ordered: ", ul)
 
 # =============================================================================
 # Second set of pairs:
 # =============================================================================
+ 
+for i in range(length//4):
 
+    x = 4*i
+    temp1 = ul[x+2]
+    temp2 = ul[x+3]
 
+    if (ul[x+1] > ul[x+2]):
+        if (ul[x+1] > ul[x+3]):
+            
+            if (ul[x] > ul[x+2]):
+                if (ul[x] > ul[x+3]):
+                    ul[x+3] = ul[x+1]
+                    ul[x+2] = ul[x]
+                    ul[x+1] = temp2
+                    ul[x] = temp1
+                else:
+                    ul[x+3] = ul[x+1]
+                    ul[x+2] = temp2
+                    ul[x+1] = ul[x]
+                    ul[x] = temp1
+            else:
+                ul[x+3] = ul[x+1]
+                ul[x+2] = temp2
+                ul[x+1] = temp1
+        else:
+            if (ul[x] > ul[x+2]):
+                ul[x+2] = ul[x+1]
+                ul[x+1] = ul[x]
+                ul[x] = temp1
+            else:
+                ul[x+2] = ul[x+1]
+                ul[x+1] = temp1
 
+print("Fours ordered(?): ", ul)
+  
+# =============================================================================
+# Third set of pairs        
+# =============================================================================
 
-
-
-
-
+for i in range(length//8):
+    x = 8*i
+    
