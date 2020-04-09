@@ -52,10 +52,10 @@ def mergeFunc(a, b):
 # =============================================================================
 
 
-ol = np.linspace(0,15,16) #Ordered list to compare with at end.
+ol = np.linspace(0,14,15) #Ordered list to compare with at end.
 ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
 np.random.shuffle(ul) #Shuffle to create unodered list
-print("ol: ", ol)
+# print("ol: ", ol)
 print("ul: ", ul)
 
 # Length of (ordered list). Should be half length number of pairs
@@ -66,7 +66,14 @@ length = len(ol) #Could use np.size or np.shape[0]
 # Main
 # =============================================================================
 
-#Say you have 20, then will have 
+# Currently sorts into pairs. If odd then one left over but that's fine
+# Then sorts into fours. If one or two left over still fine. 
+# But if three left over then not sorted! Must sort this
+# Then sort into eights. If 1/2/3/4 left over fine, but 5/6/7 need sorting
+# I.e. any more than half of target (= prev target) won't be sorted correctly 
+# Can sort these by diving into two and merging these (will still work fine)
+
+# E.g. list of 20
 # 20x 1s -> 10x 2s -> 5x 4s -> 2x 8s and a 4 -> 1x 16 and a 4 -> 20
 #Largest array given by 2^4. Can access this number using log
 # Number of merges given by this number + 1 (since not a power of 2)
@@ -83,22 +90,38 @@ for i in range(merge_num):
     
     init_arr_size = pow(2, i)
     pair_arr_size = 2 * init_arr_size
-    
     arr_num = length // pair_arr_size
     
     # print("Pair size: ", pair_arr_size)
     
+    #Merge pairs
     for j in range(arr_num):
         
         x = j * pair_arr_size
         # print("x: ", x)
         ul[x:x + pair_arr_size] = mergeFunc(ul[x:x + init_arr_size], ul[x + init_arr_size:x + 2 * init_arr_size])
     
-    # print(ul)
+    
+    #Need to merge any residual elements if greater than previous merge size
+    residual = np.mod(length, pair_arr_size)
+    
+    # print("residual: ", residual)
+    # print("init_arr_size: ", init_arr_size)
+    
+    if (residual > init_arr_size):
+        print("test!")
+        ul[-residual:] = mergeFunc(ul[-residual:-residual//2], ul[-residual//2:])
+    
+    print("ul: ", ul)
+
+
+
 
 print("Unordered list: ", ul)
 if (np.min(np.subtract(ul, ol)) == 0):
     print("Sorted!")
+else:
+    print("Not sorted.")
 
 
 
