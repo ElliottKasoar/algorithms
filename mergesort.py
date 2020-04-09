@@ -52,7 +52,7 @@ def mergeFunc(a, b):
 # =============================================================================
 
 
-ol = np.linspace(0,14,15) #Ordered list to compare with at end.
+ol = np.linspace(0,12,13) #Ordered list to compare with at end.
 ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
 np.random.shuffle(ul) #Shuffle to create unodered list
 # print("ol: ", ol)
@@ -91,33 +91,28 @@ for i in range(merge_num):
     init_arr_size = pow(2, i)
     pair_arr_size = 2 * init_arr_size
     arr_num = length // pair_arr_size
-    
-    # print("Pair size: ", pair_arr_size)
-    
+        
     #Merge pairs
     for j in range(arr_num):
         
         x = j * pair_arr_size
-        # print("x: ", x)
         ul[x:x + pair_arr_size] = mergeFunc(ul[x:x + init_arr_size], ul[x + init_arr_size:x + 2 * init_arr_size])
-    
     
     #Need to merge any residual elements if greater than previous merge size
     residual = np.mod(length, pair_arr_size)
-    
-    # print("residual: ", residual)
-    # print("init_arr_size: ", init_arr_size)
+            
+    # mergeFunc needs ordered lists to be merged
+    #If combining one at end won't necessarily be in order
+    #Will always be in order for previous pair size and remainder
     
     if (residual > init_arr_size):
-        print("test!")
-        ul[-residual:] = mergeFunc(ul[-residual:-residual//2], ul[-residual//2:])
+        # print("test!")
+        ul[-residual:] = mergeFunc(ul[-residual:-(residual-init_arr_size)], ul[-(residual-init_arr_size):])
     
     print("ul: ", ul)
 
 
-
-
-print("Unordered list: ", ul)
+print("'Unordered' list: ", ul)
 if (np.min(np.subtract(ul, ol)) == 0):
     print("Sorted!")
 else:
