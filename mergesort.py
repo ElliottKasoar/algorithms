@@ -105,15 +105,37 @@ def recursive_sort(full_arr):
     
     length = len(full_arr)
     
+    # half_length = length//2
+    # left_arr = full_arr[:half_length]
+    # right_arr = full_arr[half_length:]
+    
+    # print("left array before merge: ", left_arr)
+    # print("right array before merge: ", right_arr)
+    # print("full array before merge: ", full_arr)
+    # full_arr[:] = mergeFunc(left_arr, right_arr)
+    # print("left array after merge: ", left_arr)
+    # print("right array after merge: ", right_arr)
+    # print("full array after merge: ", full_arr)
+    
+    # full_arr[0] = 100
+    
     if (length > 1):
         
         half_length = length//2
-        left_arr = full_arr[half_length:]
-        right_arr = full_arr[:half_length]
+        left_arr = full_arr[:half_length]
+        right_arr = full_arr[half_length:]
         
         recursive_sort(left_arr)
         recursive_sort(right_arr)    
-    
+        
+        print("left array: ", left_arr)
+        print("right array: ", left_arr)
+        print("full array: ", full_arr)
+        full_arr[:] = mergeFunc(left_arr, right_arr)
+        print("left array: ", left_arr)
+        print("right array: ", left_arr)
+        print("full array: ", full_arr)
+
 
 # =============================================================================
 # Useful values
@@ -121,11 +143,14 @@ def recursive_sort(full_arr):
 
 # Will be ordered lowest to highest
 
-ol = np.linspace(1,100,1000000) #Ordered list to compare with at end.
+ol = np.linspace(1,20,20) #Ordered list to compare with at end.
 ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
 np.random.shuffle(ul) #Shuffle to create unodered list
 print("ol: ", ol)
 print("ul: ", ul)
+
+# ul= np.array([3, 4, 1, 2])
+# ul = [3, 4, 1, 2]
 
 #Run main code
 t1= time.time()
@@ -133,8 +158,10 @@ recursive_sort(ul)
 t2= time.time()
 dt = t2 - t1
 
+print("Final list: ", ul)
+
 # print("'Unordered' list: ", ul)
-if (np.min(np.subtract(ul, ol)) == 0):
+if (np.max(np.subtract(ul, ol)) == 0):
     print("Sorted!")
     print("Time taken = ", dt)
 else:
