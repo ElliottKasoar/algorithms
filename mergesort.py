@@ -58,9 +58,11 @@ def mergeFunc(a, b):
 # Main
 # =============================================================================
 
-# Per
-def main(ul, length):
+# Loop sort
+def loop_sort(ul):
     
+    length = len(ul) #Could use np.size or np.shape[0]
+
     power_num = int(math.log2(length))
     remainder = length - pow(2, power_num)
     
@@ -94,9 +96,30 @@ def main(ul, length):
         
         # print("ul: ", ul)
 
+
+# =============================================================================
+# Reecursive sort
+# =============================================================================
+
+def recursive_sort(full_arr):
+    
+    length = len(full_arr)
+    
+    if (length > 1):
+        
+        half_length = length//2
+        left_arr = full_arr[half_length:]
+        right_arr = full_arr[:half_length]
+        
+        recursive_sort(left_arr)
+        recursive_sort(right_arr)    
+    
+
 # =============================================================================
 # Useful values
 # =============================================================================
+
+# Will be ordered lowest to highest
 
 ol = np.linspace(1,100,1000000) #Ordered list to compare with at end.
 ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
@@ -104,13 +127,9 @@ np.random.shuffle(ul) #Shuffle to create unodered list
 print("ol: ", ol)
 print("ul: ", ul)
 
-# Length of (ordered list). Should be half length number of pairs
-# Will be ordered lowest to highest
-length = len(ol) #Could use np.size or np.shape[0]
-
 #Run main code
 t1= time.time()
-main(ul, length)
+recursive_sort(ul)
 t2= time.time()
 dt = t2 - t1
 
