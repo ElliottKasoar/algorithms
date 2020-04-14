@@ -6,13 +6,20 @@ Created on Tue Apr  7 17:55:44 2020
 @author: Elliott
 """
 
-# Sorting algorithm. Not quite merge sort (?) since not always divided equally
+# Merge sort algorithm. Implemented in two different ways:
+
+# loop_sort function not quite merge sort (?) since not always divided equally
 # Current implementation sorts into pairs, then fours, then eights etc
 # Remainder that doesn't divide into power of two also sorted
 # Means final merge not necessarily close to even e.g. could be 16 and 2
-
 # E.g. list of 20
 # 20x 1s -> 10x 2s -> 5x 4s -> 2x 8s and a 4 -> 1x 16 and a 4 -> 20
+
+# recursive_sort function more usual implementation. Recursively divides list
+# in two, then merges back together in order
+# E.g. list of 20
+# 20 <-> 2x 10s <-> 4x 5s <-> 4x 3s and 4x 2s <-> 8x 2s and 4x 1s <-> 20x 1s
+
 
 import numpy as np
 import math
@@ -131,7 +138,7 @@ def recursive_sort(full_arr):
 
 def main(recursive_flag):
     
-    ol = np.linspace(1,100,10000000) #Ordered list to compare with at end.
+    ol = np.linspace(1,100,10) #Ordered list to compare with at end.
     ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
     np.random.shuffle(ul) #Shuffle to create unodered list
     
