@@ -26,6 +26,7 @@ import time
 # Initial arrays often same length but will not always be unless...
 # ...final array is power of 2. Inputs a and b, returns c.
 def mergeFunc(a, b):
+    
     length_a = len(a)
     length_b = len(b)
     length_c = length_a + length_b
@@ -55,7 +56,7 @@ def mergeFunc(a, b):
     return c
 
 # =============================================================================
-# Main
+# Sort using loop from bottom up
 # =============================================================================
 
 # Loop sort
@@ -81,89 +82,92 @@ def loop_sort(ul):
         for j in range(arr_num):
             
             x = j * pair_arr_size
-            ul[x:x + pair_arr_size] = mergeFunc(ul[x:x + init_arr_size], ul[x + init_arr_size:x + 2 * init_arr_size])
+            ul[x:x + pair_arr_size] = mergeFunc(ul[x:x + init_arr_size], 
+                                                ul[x + init_arr_size:x + 
+                                                   2 * init_arr_size])
         
-        #Need to merge any residual elements if greater than previous merge size
+        # Merge any residual elements if greater than previous merge size
         residual = np.mod(length, pair_arr_size)
                 
         # mergeFunc needs ordered lists to be merged
-        #If combining one at end won't necessarily be in order if split in half
-        #But previous pair size will be ordered, and remainder will also be ordered
+        # If combining one at end won't necessarily be ordered if split in half
+        # But previous pair size will be ordered, 
+        # and remainder will also be ordered
         
         if (residual > init_arr_size):
             # print("test!")
-            ul[-residual:] = mergeFunc(ul[-residual:-(residual-init_arr_size)], ul[-(residual-init_arr_size):])
-        
-        # print("ul: ", ul)
+            ul[-residual:] = mergeFunc(ul[-residual:-(residual-init_arr_size)],
+                                       ul[-(residual-init_arr_size):])
 
 
 # =============================================================================
 # Reecursive sort
 # =============================================================================
 
+#Use recursion to divide list in half repeatedly then merge together in order
+
 def recursive_sort(full_arr):
     
     length = len(full_arr)
     
-    # half_length = length//2
-    # left_arr = full_arr[:half_length]
-    # right_arr = full_arr[half_length:]
-    
-    # print("left array before merge: ", left_arr)
-    # print("right array before merge: ", right_arr)
-    # print("full array before merge: ", full_arr)
-    # full_arr[:] = mergeFunc(left_arr, right_arr)
-    # print("left array after merge: ", left_arr)
-    # print("right array after merge: ", right_arr)
-    # print("full array after merge: ", full_arr)
-    
-    # full_arr[0] = 100
-    
     if (length > 1):
         
+        #Divide list in two
         half_length = length//2
         left_arr = full_arr[:half_length]
         right_arr = full_arr[half_length:]
         
+        #Split each half further
         recursive_sort(left_arr)
         recursive_sort(right_arr)    
         
-        print("left array: ", left_arr)
-        print("right array: ", left_arr)
-        print("full array: ", full_arr)
+        #Merge two halves
         full_arr[:] = mergeFunc(left_arr, right_arr)
-        print("left array: ", left_arr)
-        print("right array: ", left_arr)
-        print("full array: ", full_arr)
 
 
 # =============================================================================
-# Useful values
+# Main
 # =============================================================================
 
-# Will be ordered lowest to highest
+def main(recursive_flag):
+    
+    ol = np.linspace(1,100,10000000) #Ordered list to compare with at end.
+    ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
+    np.random.shuffle(ul) #Shuffle to create unodered list
+    
+    # print("ol: ", ol)
+    # print("ul: ", ul)
+        
+    #Run main code. Either recursive function (divide and merge)
+    # or via loop merging pairs etc from start
+    
+    if (recursive_flag):
+        t1= time.time()
+        recursive_sort(ul)
+        t2= time.time()
+        dt = t2 - t1
+    else:
+        t1= time.time()
+        loop_sort(ul)
+        t2= time.time()
+        dt = t2 - t1
+        
+    # print("Final list: ", ul)
 
-ol = np.linspace(1,20,20) #Ordered list to compare with at end.
-ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
-np.random.shuffle(ul) #Shuffle to create unodered list
-print("ol: ", ol)
-print("ul: ", ul)
+    if (np.array_equal(ol, ul)):
+        print("Sorted!")
+        print("Time taken = ", dt)
+    else:
+        print("Not sorted.")
 
-# ul= np.array([3, 4, 1, 2])
-# ul = [3, 4, 1, 2]
 
-#Run main code
-t1= time.time()
-recursive_sort(ul)
-t2= time.time()
-dt = t2 - t1
+# =============================================================================
+# Run code
+# =============================================================================
 
-print("Final list: ", ul)
+# Sort a list (or numpy array) from lowest to highest using merge sort
 
-# print("'Unordered' list: ", ul)
-if (np.max(np.subtract(ul, ol)) == 0):
-    print("Sorted!")
-    print("Time taken = ", dt)
-else:
-    print("Not sorted.")
+#Flag to decide whether to use recursion or not
+recursive_flag = True
+main(recursive_flag)
 
