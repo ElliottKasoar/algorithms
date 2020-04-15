@@ -105,7 +105,7 @@ def binary_search_loop(arr, search_val):
 
 def main(linear_flag, search_val):
     
-    values = np.linspace(1,1000000000,1000000000) #Ordered list (can be randomised)
+    values = np.linspace(1,10,10) #Ordered list (can be randomised)
 
     if (linear_flag):
         np.random.shuffle(values) #Shuffle to create unodered list
@@ -155,9 +155,9 @@ def main(linear_flag, search_val):
 # Do not have to create mutltiple new arrays as with dividing the array (split)
 
 linear_flag = False #Use linear search algorithm (or binary)
-loop_flag = False #Use loop with left and right indicies updated as necessary
+loop_flag = True #Use loop with left and right indicies updated as necessary
 split_flag = False #Uses recursive search to split array repeatedly
 #If all false will recursively search, updating left and right indices
 
-search_val = 987654321 #Value searching for
+search_val = 3 #Value searching for
 main(linear_flag, search_val)

@@ -9,12 +9,37 @@ Created on Tue Apr 14 22:01:09 2020
 # Quicksort algorithm
 
 import numpy as np
-# import math
 import time
 
 def quicksort(arr):
     
-    arr[0] = 100
+    length = len(arr)
+    
+    if (length > 1):
+        pivot = arr[length - 1]
+        partition = 0
+        
+        for i in range(length):
+        
+            if (arr[i] < pivot):
+                
+                if (i <= partition):
+                    partition += 1
+                else:
+                    temp = arr[partition]
+                    arr[partition] = arr[i]
+                    arr[i] = temp
+                    partition += 1
+            
+            if (arr[i] == pivot):
+                temp = arr[partition]
+                arr[partition] = arr[i]
+                arr[i] = temp
+                    
+        # print("ul: ", arr)
+        
+        quicksort(arr[:partition])
+        quicksort(arr[(partition + 1):])
 
 def main():
     

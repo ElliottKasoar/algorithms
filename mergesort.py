@@ -112,7 +112,6 @@ def loop_sort(ul):
 # =============================================================================
 
 #Use recursion to divide list in half repeatedly then merge together in order
-
 def recursive_sort(full_arr):
     
     length = len(full_arr)
@@ -138,7 +137,7 @@ def recursive_sort(full_arr):
 
 def main(recursive_flag):
     
-    ol = np.linspace(1,100,10) #Ordered list to compare with at end.
+    ol = np.linspace(1,10,10) #Ordered list to compare with at end.
     ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
     np.random.shuffle(ul) #Shuffle to create unodered list
     
