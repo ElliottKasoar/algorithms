@@ -11,6 +11,12 @@ Created on Tue Apr 14 22:16:00 2020
 import numpy as np
 import time
 
+
+# =============================================================================
+# Linear search algorithm
+# =============================================================================
+
+# Loops through all elements in array and compares to target value
 def linear_search(arr, search_val):
     
     length = len(arr)
@@ -20,8 +26,15 @@ def linear_search(arr, search_val):
             return i
     
     return -1
-    
-def binary_search(arr, search_val, index):
+  
+# =============================================================================
+# Binary search algorithm(s)
+# =============================================================================
+
+# Takes in array to be searched through, search value and index being tracked
+# Recursively divides array by comparing middle value to target
+# Returns index if found, or -1 if not
+def binary_search_rec_split(arr, search_val, index):
     
     length = len(arr)
     
@@ -31,14 +44,51 @@ def binary_search(arr, search_val, index):
         
         if (search_val >= arr[mid]):
             index += mid
-            index = binary_search(arr[mid:], search_val, index) 
+            index = binary_search_rec_split(arr[mid:], search_val, index) 
         else:
-            index = binary_search(arr[:mid], search_val, index)
+            index = binary_search_rec_split(arr[:mid], search_val, index)
     
     elif (arr[0] != search_val):
         return -1
     
     return index
+
+
+# Takes in array to be searched through, search value and index being tracked
+# Recursively searches array by comparing target to mid point between left 
+# and right indicies. Left or right index changed if value greater or smaller
+# Returns index if found, or -1 if not.
+def binary_search_rec_lr(arr, search_val, l, r):
+            
+    if (l <= r):
+        
+        mid = (l+r)//2 
+        # print("Mid: ", mid)
+        
+        if (arr[mid] == search_val):
+            return mid
+    
+        elif (search_val > arr[mid]):
+            return binary_search_rec_lr(arr, search_val, (mid + 1), r)
+        else:
+            return binary_search_rec_lr(arr, search_val, l, (mid - 1))
+   
+    else:
+        return -1
+
+
+
+def binary_search_loop(arr, search_val):
+    
+    length = len(arr)
+    index = 10
+    return index
+
+
+
+# =============================================================================
+# Main
+# =============================================================================
 
 def main(linear_flag, search_val):
     
@@ -50,19 +100,32 @@ def main(linear_flag, search_val):
     print("Searching for: ", search_val)
     print("List: ", values)
         
-    #Run main code
+    #Run main code - linear or binary
     
     if (linear_flag):
         t1= time.time()
         index = linear_search(values, search_val)
         t2= time.time()
         dt = t2 - t1
-    else:
+    elif (loop_flag):
+        t1= time.time()
+        index = binary_search_loop(values, search_val)
+        t2= time.time()
+        dt = t2 - t1   
+    elif (split_flag):
         t1= time.time()
         index = 0
-        index = binary_search(values, search_val, index)
+        index = binary_search_rec_split(values, search_val, index)
         t2= time.time()
-        dt = t2 - t1        
+        dt = t2 - t1
+    else:
+        t1= time.time()
+        l = 0
+        r = len(values) - 1
+        index = binary_search_rec_lr(values, search_val, l, r)
+        t2= time.time()
+        dt = t2 - t1    
+
 
     if (index > -1):
         print("Value found. Index = ", index)
@@ -71,6 +134,13 @@ def main(linear_flag, search_val):
  
     print("Time taken = ", dt)
 
-linear_flag = False
-search_val = 11
+# =============================================================================
+# Run code
+# =============================================================================
+
+linear_flag = False #Use linear search algorithm (or binary)
+loop_flag = False
+split_flag = False
+
+search_val = 10 #Value searching for
 main(linear_flag, search_val)
