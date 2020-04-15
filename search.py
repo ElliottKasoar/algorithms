@@ -11,7 +11,6 @@ Created on Tue Apr 14 22:16:00 2020
 import numpy as np
 import time
 
-
 # =============================================================================
 # Linear search algorithm
 # =============================================================================
@@ -54,12 +53,12 @@ def binary_search_rec_split(arr, search_val, index):
     return index
 
 
-# Takes in array to be searched through, search value and index being tracked
+# Takes in array to be searched, search value and left and right indices
 # Recursively searches array by comparing target to mid point between left 
 # and right indicies. Left or right index changed if value greater or smaller
 # Returns index if found, or -1 if not.
 def binary_search_rec_lr(arr, search_val, l, r):
-            
+        
     if (l <= r):
         
         mid = (l+r)//2 
@@ -77,14 +76,28 @@ def binary_search_rec_lr(arr, search_val, l, r):
         return -1
 
 
-
+# Takes in array to be searched through and search value
+# Searches array in loop by comparing target to mid point between left 
+# and right indicies. Left or right index changed if value greater or smaller
+# Returns index if found, or -1 if not.
 def binary_search_loop(arr, search_val):
-    
+        
     length = len(arr)
-    index = 10
-    return index
-
-
+    l = 0
+    r = length - 1
+    
+    while (l <= r):
+        
+        mid = (l+r)//2
+        
+        if (arr[mid] == search_val):
+            return mid
+        elif (search_val > arr[mid]):
+            l = mid + 1
+        else:
+            r = mid -1
+        
+    return -1
 
 # =============================================================================
 # Main
@@ -92,16 +105,15 @@ def binary_search_loop(arr, search_val):
 
 def main(linear_flag, search_val):
     
-    values = np.linspace(1,10,10) #Ordered list (can be randomised)
-    
+    values = np.linspace(1,1000000000,1000000000) #Ordered list (can be randomised)
+
     if (linear_flag):
         np.random.shuffle(values) #Shuffle to create unodered list
     
     print("Searching for: ", search_val)
-    print("List: ", values)
+    # print("List: ", values)
         
     #Run main code - linear or binary
-    
     if (linear_flag):
         t1= time.time()
         index = linear_search(values, search_val)
@@ -126,7 +138,6 @@ def main(linear_flag, search_val):
         t2= time.time()
         dt = t2 - t1    
 
-
     if (index > -1):
         print("Value found. Index = ", index)
     else:
@@ -138,9 +149,15 @@ def main(linear_flag, search_val):
 # Run code
 # =============================================================================
 
-linear_flag = False #Use linear search algorithm (or binary)
-loop_flag = False
-split_flag = False
+# Binary search orders of mag quicker but must be ordered 
+# (Will shuffle for demonstration)
+# For binart search, loop or recursive with l and r indices much quicker
+# Do not have to create mutltiple new arrays as with dividing the array (split)
 
-search_val = 10 #Value searching for
+linear_flag = False #Use linear search algorithm (or binary)
+loop_flag = False #Use loop with left and right indicies updated as necessary
+split_flag = False #Uses recursive search to split array repeatedly
+#If all false will recursively search, updating left and right indices
+
+search_val = 987654321 #Value searching for
 main(linear_flag, search_val)
