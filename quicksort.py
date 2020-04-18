@@ -11,6 +11,11 @@ Created on Tue Apr 14 22:01:09 2020
 import numpy as np
 import time
 
+# Quicksort algorithm to sort array (arr)
+# Currently chooses last element as pivot, sorts values above and below pivot
+# on either side of a partition. Then recursively sorts sub arrays on each side
+# Could implement using upper and lower indicies rather than splitting arrays
+#Could also use different pivots e.g. average values etc
 def quicksort(arr):
     
     length = len(arr)
@@ -43,12 +48,12 @@ def quicksort(arr):
 
 def main():
     
-    ol = np.linspace(1,10,10) #Ordered list to compare with at end.
+    ol = np.linspace(1,10000000,10000000) #Ordered list to compare with at end.
     ul = ol.copy() #Copy else just renames ol as ul and will still be shuffled
     np.random.shuffle(ul) #Shuffle to create unodered list
     
-    print("ol: ", ol)
-    print("ul: ", ul)
+    # print("ol: ", ol)
+    # print("ul: ", ul)
         
     #Run main code
     
@@ -57,7 +62,7 @@ def main():
     t2= time.time()
     dt = t2 - t1
 
-    print("Final list: ", ul)
+    # print("Final list: ", ul)
 
     if (np.array_equal(ol, ul)):
         print("Sorted!")
